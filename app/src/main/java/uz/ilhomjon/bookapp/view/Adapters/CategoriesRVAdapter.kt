@@ -1,4 +1,4 @@
-package uz.ilhomjon.bookapp.Adapters
+package uz.ilhomjon.bookapp.view.Adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

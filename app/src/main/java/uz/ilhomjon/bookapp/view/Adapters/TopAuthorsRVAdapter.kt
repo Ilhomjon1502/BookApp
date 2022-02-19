@@ -1,4 +1,4 @@
-package uz.ilhomjon.bookapp.Adapters
+package uz.ilhomjon.bookapp.view.Adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.ilhomjon.bookapp.Models.TopAuthorsModel
 import uz.ilhomjon.bookapp.databinding.TopAuthorsItemBinding
-import uz.ilhomjon.bookapp.databinding.TrendingItemBinding
 
 class TopAuthorsRVAdapter(var authorsItemList: List<TopAuthorsModel>) :
     RecyclerView.Adapter<TopAuthorsRVAdapter.TopAuthorsVh>() {

@@ -1,14 +1,14 @@
-package uz.ilhomjon.bookapp
+package uz.ilhomjon.bookapp.view
 
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import uz.ilhomjon.bookapp.Adapters.CategoriesRVAdapter
-import uz.ilhomjon.bookapp.Adapters.TopAuthorsRVAdapter
-import uz.ilhomjon.bookapp.Adapters.TrendingBooksRVAdapter
+import uz.ilhomjon.bookapp.view.Adapters.CategoriesRVAdapter
+import uz.ilhomjon.bookapp.view.Adapters.TopAuthorsRVAdapter
+import uz.ilhomjon.bookapp.view.Adapters.TrendingBooksRVAdapter
 import uz.ilhomjon.bookapp.Models.CategoriesModel
 import uz.ilhomjon.bookapp.Models.TopAuthorsModel
 import uz.ilhomjon.bookapp.Models.TrendingBookModel
+import uz.ilhomjon.bookapp.R
 import uz.ilhomjon.bookapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
