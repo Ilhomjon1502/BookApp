@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import uz.ilhomjon.bookapp.Models.myclass.Book
-import uz.ilhomjon.bookapp.Models.myclass.Lists
+import uz.ilhomjon.bookapp.Models.myclass.AllBook.Book
 import uz.ilhomjon.bookapp.databinding.TrendingItemBinding
 
 class TrendingBooksRVAdapter(var trendingBookList: List<Book>) :
@@ -14,7 +13,7 @@ class TrendingBooksRVAdapter(var trendingBookList: List<Book>) :
     inner class TrendingVh(private val binding: TrendingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(trendingBookModel: Book, position: Int) {
-            binding.trendingBooksText.text = trendingBookModel.contributor
+            binding.trendingBooksText.text = trendingBookModel.title
             Picasso.get().load(trendingBookModel.book_image).into(binding.imageView)
         }
     }

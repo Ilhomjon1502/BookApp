@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
@@ -108,6 +113,15 @@
         app:layout_constraintTop_toBottomOf="@id/categoriesTv"
         app:spanCount="3"
         tools:listitem="@layout/categories_item" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_category_names"
+            app:layout_constraintTop_toTopOf="@id/categoriesRV"
+            app:layout_constraintLeft_toLeftOf="@id/categoriesRV"
+            app:layout_constraintRight_toRightOf="@id/categoriesRV"
+            app:layout_constraintBottom_toBottomOf="@id/categoriesRV"
+            />
 
     <TextView
         android:id="@+id/trendingBooksTv"
@@ -128,13 +142,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingEnd="10dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="@id/trendingBooksTv"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trendingBooksTv"
-        tools:listitem="@layout/trending_item" />
+        tools:listitem="@layout/trending_item"
+        tools:ignore="RtlSymmetry" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_trending_books"
+            app:layout_constraintTop_toTopOf="@id/trendingBooksRV"
+            app:layout_constraintLeft_toLeftOf="@id/trendingBooksRV"
+            app:layout_constraintRight_toRightOf="@id/trendingBooksRV"
+            app:layout_constraintBottom_toBottomOf="@id/trendingBooksRV"
+            />
 
     <TextView
         android:id="@+id/topAuthorsTv"
@@ -161,17 +186,16 @@
         app:layout_constraintLeft_toLeftOf="@id/topAuthorsTv"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topAuthorsTv"
-        tools:listitem="@layout/top_authors_item" />
+        tools:listitem="@layout/trending_item" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_author"
+            app:layout_constraintTop_toTopOf="@id/topAuthorsRV"
+            app:layout_constraintLeft_toLeftOf="@id/topAuthorsRV"
+            app:layout_constraintRight_toRightOf="@id/topAuthorsRV"
+            app:layout_constraintBottom_toBottomOf="@id/topAuthorsRV"
+            />
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress_loading"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

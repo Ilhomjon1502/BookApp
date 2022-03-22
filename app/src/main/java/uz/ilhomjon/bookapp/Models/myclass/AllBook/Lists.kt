@@ -1,4 +1,6 @@
-package uz.ilhomjon.bookapp.Models.myclass
+package uz.ilhomjon.bookapp.Models.myclass.AllBook
+
+import uz.ilhomjon.bookapp.Models.myclass.AllBook.Book
 
 data class Lists(
     val books: List<Book>,

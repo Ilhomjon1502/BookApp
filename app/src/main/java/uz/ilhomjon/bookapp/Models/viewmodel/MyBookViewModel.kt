@@ -8,24 +8,27 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import uz.ilhomjon.bookapp.Models.myclass.MyBook
+import uz.ilhomjon.bookapp.Models.myclass.AllBook.MyBook
+import uz.ilhomjon.bookapp.Models.myclass.CategoryClass.MyCategory
+import uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.BookListByCategory
 import uz.ilhomjon.bookapp.Models.retrofit.Common
 import java.lang.Exception
 
 class MyBookViewModel : ViewModel() {
     private val myBookViewModel = MutableLiveData<MyResource<MyBook>>()
+    private val categoryNameList = MutableLiveData<MyResource<MyCategory>>()
+    private val getBookListByCategory = MutableLiveData<MyResource<BookListByCategory>>()
 
     fun getMyBook(context: Context):LiveData<MyResource<MyBook>>{
         val apiService = Common.retrofitService(context)
 
         viewModelScope.launch {
             myBookViewModel.postValue(MyResource.loading(null))
+            categoryNameList.postValue(MyResource.loading(null))
 
             try {
-
                 coroutineScope {
                     val async1 = async { apiService.getAllBook() }
-
                     val await = async1.await()
                     myBookViewModel.postValue(MyResource.success(await))
                 }
@@ -35,5 +38,45 @@ class MyBookViewModel : ViewModel() {
             }
         }
         return myBookViewModel
+    }
+
+    fun getCategoryNames(context: Context):LiveData<MyResource<MyCategory>>{
+        val apiService = Common.retrofitService(context)
+
+        viewModelScope.launch {
+            categoryNameList.postValue(MyResource.loading(null))
+            try {
+                coroutineScope {
+                    val async2 = async { apiService.getCategoryNameList() }
+
+                    val await2 = async2.await()
+                    categoryNameList.postValue(MyResource.success(await2))
+                }
+
+            }catch (e:Exception){
+                categoryNameList.postValue(MyResource.error(e.message, null))
+            }
+        }
+        return categoryNameList
+    }
+
+    fun getBookByCategoryList(context: Context, title:String):LiveData<MyResource<BookListByCategory>>{
+        val apiService = Common.retrofitService(context)
+
+        viewModelScope.launch {
+            getBookListByCategory.postValue(MyResource.loading(null))
+            try {
+                coroutineScope {
+                    val async2 = async { apiService.getBookListByCategory(title) }
+
+                    val await2 = async2.await()
+                    getBookListByCategory.postValue(MyResource.success(await2))
+                }
+
+            }catch (e:Exception){
+                getBookListByCategory.postValue(MyResource.error(e.message, null))
+            }
+        }
+        return getBookListByCategory
     }
 }
