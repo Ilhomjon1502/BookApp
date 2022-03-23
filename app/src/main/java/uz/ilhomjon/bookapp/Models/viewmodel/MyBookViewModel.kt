@@ -19,8 +19,8 @@ class MyBookViewModel : ViewModel() {
     private val categoryNameList = MutableLiveData<MyResource<MyCategory>>()
     private val getBookListByCategory = MutableLiveData<MyResource<BookListByCategory>>()
 
-    fun getMyBook(context: Context):LiveData<MyResource<MyBook>>{
-        val apiService = Common.retrofitService(context)
+    fun getMyBook():LiveData<MyResource<MyBook>>{
+        val apiService = Common.retrofitService()
 
         viewModelScope.launch {
             myBookViewModel.postValue(MyResource.loading(null))
@@ -40,8 +40,8 @@ class MyBookViewModel : ViewModel() {
         return myBookViewModel
     }
 
-    fun getCategoryNames(context: Context):LiveData<MyResource<MyCategory>>{
-        val apiService = Common.retrofitService(context)
+    fun getCategoryNames():LiveData<MyResource<MyCategory>>{
+        val apiService = Common.retrofitService()
 
         viewModelScope.launch {
             categoryNameList.postValue(MyResource.loading(null))
@@ -60,8 +60,8 @@ class MyBookViewModel : ViewModel() {
         return categoryNameList
     }
 
-    fun getBookByCategoryList(context: Context, title:String):LiveData<MyResource<BookListByCategory>>{
-        val apiService = Common.retrofitService(context)
+    fun getBookByCategoryList(title:String):LiveData<MyResource<BookListByCategory>>{
+        val apiService = Common.retrofitService()
 
         viewModelScope.launch {
             getBookListByCategory.postValue(MyResource.loading(null))

@@ -12,11 +12,11 @@ object Common {
     const val BASE_URL = "https://api.nytimes.com/svc/books/v3/"
     const val API_KEY = "beKOJAq1sjYHYp2raykgNMvjzHt4npjr"
 
-    fun retrofitService(context: Context):RetrofitService {
-        return getRetrofit(context).create(RetrofitService::class.java)
+    fun retrofitService():RetrofitService {
+        return getRetrofit().create(RetrofitService::class.java)
     }
 
-    fun getRetrofit(context: Context) : Retrofit{
+    fun getRetrofit() : Retrofit{
         val build = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
