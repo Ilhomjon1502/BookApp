@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/drawable/linear_back.xml" value="0.252" />
+        <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/drawable/linear_back_two.xml" value="0.252" />
         <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/layout/activity_main.xml" value="0.36615384615384616" />
         <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/layout/categories_item.xml" value="0.371875" />
+        <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/layout/fragment_item.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/layout/top_authors_item.xml" value="0.371875" />
         <entry key="..\:/AndroidProjects/BookApp/app/src/main/res/layout/trending_item.xml" value="0.371875" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/BookApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
