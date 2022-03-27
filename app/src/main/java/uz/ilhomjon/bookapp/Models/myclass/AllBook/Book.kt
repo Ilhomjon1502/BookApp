@@ -1,5 +1,7 @@
 package uz.ilhomjon.bookapp.Models.myclass.AllBook
 
+import java.io.Serializable
+
 data class Book(
     val age_group: String,
     val amazon_product_url: String,
@@ -26,4 +28,4 @@ data class Book(
     val title: String,
     val updated_date: String,
     val weeks_on_list: Int
-)
+):Serializable

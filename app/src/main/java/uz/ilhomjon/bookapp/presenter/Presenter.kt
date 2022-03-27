@@ -22,6 +22,10 @@ class Presenter(
         mainView?.showCategoriesBooks(res)
     }
 
+    override fun getSerach(res: ArrayList<Book>) {
+        mainView?.showSearch(res)
+    }
+
     override fun onCreateStart() {
         model.updateUiFirst(this)
     }
@@ -30,16 +34,8 @@ class Presenter(
         model.setCategoryBooks(this, title)
     }
 
-    override fun clickItemTrendingBook(book: Book) {
-        TODO("Not yet implemented")
-    }
-
-    override fun clickItemByCategoryBook(book: uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.Book) {
-        TODO("Not yet implemented")
-    }
-
     override fun setSearch(text: String) {
-        TODO("Not yet implemented")
+        model.setSearch(this, text)
     }
 
 }

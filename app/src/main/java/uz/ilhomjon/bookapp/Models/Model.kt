@@ -3,16 +3,27 @@ package uz.ilhomjon.bookapp.Models
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import uz.ilhomjon.bookapp.Models.myclass.AllBook.Book
+import uz.ilhomjon.bookapp.Models.myclass.AllBook.MyBook
 import uz.ilhomjon.bookapp.Models.viewmodel.MyBookViewModel
+import uz.ilhomjon.bookapp.Models.viewmodel.MyStatus
 import uz.ilhomjon.bookapp.presenter.Contacts
+import java.lang.Exception
 
 class Model(var viewModelStoreOwner: ViewModelStoreOwner, var lifecycleOwner: LifecycleOwner) :
     Contacts.Model {
     val myBookViewModel: MyBookViewModel =
         ViewModelProvider(viewModelStoreOwner).get(MyBookViewModel::class.java)
+    var list = ArrayList<Book>()
 
     override fun updateUiFirst(apiGetBooks: Contacts.Model.ApiGetBooks) {
         myBookViewModel.getMyBook().observe(lifecycleOwner) {
+            when(it.status){
+                MyStatus.SUCCESS->{
+                    list.clear()
+                    list.addAll(it.data?.results!!.lists[0].books)
+                }
+            }
             apiGetBooks.getTrendingBooks(it)
         }
         myBookViewModel.getCategoryNames().observe(lifecycleOwner) {
@@ -24,5 +35,19 @@ class Model(var viewModelStoreOwner: ViewModelStoreOwner, var lifecycleOwner: Li
         myBookViewModel.getBookByCategoryList(title).observe(lifecycleOwner){
             apiGetBooks.getCategoriesBooks(it)
         }
+    }
+
+    override fun setSearch(apiGetBooks: Contacts.Model.ApiGetBooks, title: String) {
+        var l = ArrayList<Book>()
+        try {
+            list.forEach {
+                if (it.title.lowercase().substring(0, title.length) == title.lowercase()) {
+                    l.add(it)
+                }
+            }
+        }catch (e:Exception){
+            l.clear()
+        }
+        apiGetBooks.getSerach(l)
     }
 }

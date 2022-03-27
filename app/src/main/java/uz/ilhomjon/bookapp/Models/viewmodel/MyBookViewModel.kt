@@ -1,6 +1,7 @@
 package uz.ilhomjon.bookapp.Models.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ import uz.ilhomjon.bookapp.Models.retrofit.Common
 import java.lang.Exception
 
 class MyBookViewModel : ViewModel() {
+    private val TAG = "MyBookViewModel"
     private val myBookViewModel = MutableLiveData<MyResource<MyBook>>()
     private val categoryNameList = MutableLiveData<MyResource<MyCategory>>()
     private val getBookListByCategory = MutableLiveData<MyResource<BookListByCategory>>()
@@ -51,6 +53,7 @@ class MyBookViewModel : ViewModel() {
 
                     val await2 = async2.await()
                     categoryNameList.postValue(MyResource.success(await2))
+                    Log.d(TAG, "getCategoryNames: $await2")
                 }
 
             }catch (e:Exception){

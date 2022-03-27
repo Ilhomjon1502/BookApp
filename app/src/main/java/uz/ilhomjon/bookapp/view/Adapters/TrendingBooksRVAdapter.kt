@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import uz.ilhomjon.bookapp.Models.myclass.AllBook.Book
 import uz.ilhomjon.bookapp.databinding.TrendingItemBinding
 
-class TrendingBooksRVAdapter(var trendingBookList: List<Book>) :
+class TrendingBooksRVAdapter(var trendingBookList: List<Book>, val rvClick: RvClick) :
     RecyclerView.Adapter<TrendingBooksRVAdapter.TrendingVh>() {
 
     inner class TrendingVh(private val binding: TrendingItemBinding) :
@@ -15,6 +15,9 @@ class TrendingBooksRVAdapter(var trendingBookList: List<Book>) :
         fun onBind(trendingBookModel: Book, position: Int) {
             binding.trendingBooksText.text = trendingBookModel.title
             Picasso.get().load(trendingBookModel.book_image).into(binding.imageView)
+            binding.root.setOnClickListener {
+                rvClick.onClick(trendingBookModel)
+            }
         }
     }
 
@@ -36,4 +39,7 @@ class TrendingBooksRVAdapter(var trendingBookList: List<Book>) :
         return trendingBookList.size
     }
 
+    interface RvClick{
+        fun onClick(book: Book)
+    }
 }

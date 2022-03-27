@@ -79,6 +79,7 @@
         app:startIconDrawable="@drawable/ic_search">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/searchHintTv"
@@ -144,7 +145,7 @@
         android:layout_marginTop="10dp"
         android:paddingEnd="10dp"
         android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="@id/trendingBooksTv"
         app:layout_constraintRight_toRightOf="parent"

@@ -1,17 +1,22 @@
 package uz.ilhomjon.bookapp.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import uz.ilhomjon.bookapp.view.Adapters.CategoriesRVAdapter
 import uz.ilhomjon.bookapp.view.Adapters.TrendingBooksRVAdapter
 import uz.ilhomjon.bookapp.Models.CategoriesModel
 import uz.ilhomjon.bookapp.Models.Model
 import uz.ilhomjon.bookapp.Models.myclass.AllBook.MyBook
 import uz.ilhomjon.bookapp.Models.myclass.CategoryClass.MyCategory
+import uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.Book
 import uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.BookListByCategory
 import uz.ilhomjon.bookapp.Models.viewmodel.MyBookViewModel
 import uz.ilhomjon.bookapp.Models.viewmodel.MyResource
@@ -39,8 +44,29 @@ class MainActivity : AppCompatActivity(), Contacts.View {
 //        loadData()
         presenter = Presenter(this, Model(this, this))
         presenter?.onCreateStart()
+
+        binding.apply {
+            searchView.addTextChangedListener {
+                if (it.toString() == ""){
+                    categoriesRV.visibility = View.VISIBLE
+                    categoriesTv.visibility = View.VISIBLE
+                    topAuthorsRV.visibility = View.VISIBLE
+                    topAuthorsTv.visibility = View.VISIBLE
+                    trendingBooksTv.visibility = View.VISIBLE
+                    presenter?.onCreateStart()
+                }else{
+                    categoriesRV.visibility = View.GONE
+                    topAuthorsRV.visibility = View.GONE
+                    categoriesTv.visibility = View.GONE
+                    topAuthorsTv.visibility = View.GONE
+                    trendingBooksTv.visibility = View.GONE
+                    presenter?.setSearch(it.toString())
+                }
+            }
+        }
     }
 
+    /*
     private fun loadData() {
 
         val myBookViewModel: MyBookViewModel =
@@ -126,12 +152,23 @@ class MainActivity : AppCompatActivity(), Contacts.View {
             }
         }
     }
+     */
 
     override fun showTrendingBooks(res: MyResource<MyBook>) {
         when (res.status) {
             MyStatus.SUCCESS -> {
                 val l = res.data?.results!!.lists[0].books
-                trendingBooksRVAdapter = TrendingBooksRVAdapter(l)
+                trendingBooksRVAdapter = TrendingBooksRVAdapter(l, object :TrendingBooksRVAdapter.RvClick{
+                    override fun onClick(book: uz.ilhomjon.bookapp.Models.myclass.AllBook.Book) {
+                        val intent = Intent(this@MainActivity, MainActivity2::class.java)
+                        intent.putExtra("isCategory", 0)
+                        intent.putExtra("keyBook", book)
+                        startActivity(intent)
+                    }
+                })
+                val manager = LinearLayoutManager(this)
+                manager.orientation = LinearLayoutManager.HORIZONTAL
+                binding.trendingBooksRV.layoutManager = manager
                 binding.trendingBooksRV.adapter = trendingBooksRVAdapter
                 binding.progressTrendingBooks.visibility = View.GONE
             }
@@ -145,14 +182,28 @@ class MainActivity : AppCompatActivity(), Contacts.View {
         }
     }
 
+    override fun showSearch(res: ArrayList<uz.ilhomjon.bookapp.Models.myclass.AllBook.Book>) {
+        trendingBooksRVAdapter = TrendingBooksRVAdapter(res, object :TrendingBooksRVAdapter.RvClick{
+            override fun onClick(book: uz.ilhomjon.bookapp.Models.myclass.AllBook.Book) {
+                val intent = Intent(this@MainActivity, MainActivity2::class.java)
+                intent.putExtra("isCategory", 0)
+                intent.putExtra("keyBook", book)
+                startActivity(intent)
+            }
+        })
+        Log.d(TAG, "showSearch: $res")
+        val manager = LinearLayoutManager(this)
+        manager.orientation = LinearLayoutManager.HORIZONTAL
+        binding.trendingBooksRV.layoutManager = manager
+        binding.trendingBooksRV.adapter = trendingBooksRVAdapter
+    }
+
     override fun showCategoriesName(res: MyResource<MyCategory>) {
         when (res.status) {
             MyStatus.LOADING -> {
-                Log.d(TAG, "loadData: loading")
                 binding.progressCategoryNames.visibility = View.VISIBLE
             }
             MyStatus.ERROR -> {
-                Log.d(TAG, "loadData: Error \n ${res.message}")
                 binding.progressCategoryNames.visibility = View.GONE
                 Toast.makeText(
                     this,
@@ -161,20 +212,24 @@ class MainActivity : AppCompatActivity(), Contacts.View {
                 ).show()
             }
             MyStatus.SUCCESS -> {
-                Log.d(TAG, "loadData: ${res.data}")
                 binding.progressCategoryNames.visibility = View.GONE
                 categoriesRVAdapter = CategoriesRVAdapter(res.data?.results!!, object : CategoriesRVAdapter.RvClick{
                     override fun onClick(title: String) {
+                        i=0
                         presenter?.setCategory(title)
                     }
                 })
+                val manager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL)
+                binding.categoriesRV.layoutManager = manager
                 binding.categoriesRV.adapter = categoriesRVAdapter
-
                 binding.progressCategoryNames.visibility = View.GONE
+
+                presenter?.setCategory(res.data.results[0].list_name)
             }
         }
     }
 
+    var i = 0
     override fun showCategoriesBooks(res: MyResource<BookListByCategory>) {
         when(res.status){
             MyStatus.LOADING->{
@@ -186,7 +241,18 @@ class MainActivity : AppCompatActivity(), Contacts.View {
             }
             MyStatus.SUCCESS->{
                 val l = res.data?.results?.books!!
-                categoryBooksRVAdapter = CategoryBooksAdapter(l)
+                Log.d(TAG, "showCategoriesBooks success ${i++}: $l")
+                categoryBooksRVAdapter = CategoryBooksAdapter(l, object :CategoryBooksAdapter.RvClick{
+                    override fun onCLick(book: Book) {
+                        val intent = Intent(this@MainActivity, MainActivity2::class.java)
+                        intent.putExtra("isCategory", 1)
+                        intent.putExtra("keyBook", book)
+                        startActivity(intent)
+                    }
+                })
+                val manager = LinearLayoutManager(this)
+                manager.orientation = LinearLayoutManager.HORIZONTAL
+                binding.topAuthorsRV.layoutManager = manager
                 binding.topAuthorsRV.adapter = categoryBooksRVAdapter
                 binding.progressAuthor.visibility = View.GONE
             }

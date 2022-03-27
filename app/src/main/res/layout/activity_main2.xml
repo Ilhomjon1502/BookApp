@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".view.MainActivity2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,6 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/image_back"
                     android:layout_width="20dp"
                     android:layout_height="25dp"
                     android:src="@drawable/back"
@@ -66,6 +68,7 @@
                     app:layout_constraintVertical_bias="0.2">
 
                     <ImageView
+                        android:id="@+id/image_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -86,6 +89,7 @@
                     app:layout_constraintVertical_bias="0.1">
 
                     <TextView
+                        android:id="@+id/tv_display_name_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Beach Town: Apocalypse"
@@ -94,6 +98,7 @@
                         android:textStyle="bold|normal" />
 
                     <TextView
+                        android:id="@+id/tv_display_name_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Beach Town: Apocalypse"
@@ -130,6 +135,7 @@
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/tv_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.7"
@@ -149,12 +155,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pages"
+                            android:text="Price"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/tv_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="240"
@@ -189,31 +196,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Audio"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="02 hr"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold|normal" />
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -236,11 +218,15 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
+                <TextView
+                    android:id="@+id/tv_desc"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    android:textStyle="italic"
+                    android:padding="10dp"
+                    android:textSize="25sp"
+                    android:text="@string/app_name"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -312,5 +298,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
