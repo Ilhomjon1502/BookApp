@@ -44,6 +44,7 @@
                     app:tint="@color/white" />
 
                 <ImageView
+                    android:id="@+id/image_save"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:src="@drawable/save"

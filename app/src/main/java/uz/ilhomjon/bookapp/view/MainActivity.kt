@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -18,13 +19,18 @@ import uz.ilhomjon.bookapp.Models.myclass.AllBook.MyBook
 import uz.ilhomjon.bookapp.Models.myclass.CategoryClass.MyCategory
 import uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.Book
 import uz.ilhomjon.bookapp.Models.myclass.bookListByCategory.BookListByCategory
+import uz.ilhomjon.bookapp.Models.utils.MySharedPreference
+import uz.ilhomjon.bookapp.Models.utils.SaveBook
 import uz.ilhomjon.bookapp.Models.viewmodel.MyBookViewModel
 import uz.ilhomjon.bookapp.Models.viewmodel.MyResource
 import uz.ilhomjon.bookapp.Models.viewmodel.MyStatus
 import uz.ilhomjon.bookapp.databinding.ActivityMainBinding
+import uz.ilhomjon.bookapp.databinding.ItemDrawerRvBinding
+import uz.ilhomjon.bookapp.databinding.NavHeaderMainBinding
 import uz.ilhomjon.bookapp.presenter.Contacts
 import uz.ilhomjon.bookapp.presenter.Presenter
 import uz.ilhomjon.bookapp.view.Adapters.CategoryBooksAdapter
+import uz.ilhomjon.bookapp.view.Adapters.RvSaveBookAdapter
 
 class MainActivity : AppCompatActivity(), Contacts.View {
 
@@ -41,11 +47,17 @@ class MainActivity : AppCompatActivity(), Contacts.View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        loadData()
         presenter = Presenter(this, Model(this, this))
         presenter?.onCreateStart()
 
         binding.apply {
+
+            navHeaderMain = NavHeaderMainBinding.inflate(layoutInflater)
+            navView.addHeaderView(navHeaderMain.root)
+
+            navImage.setOnClickListener {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
             searchView.addTextChangedListener {
                 if (it.toString() == ""){
                     categoriesRV.visibility = View.VISIBLE
@@ -63,6 +75,25 @@ class MainActivity : AppCompatActivity(), Contacts.View {
                     presenter?.setSearch(it.toString())
                 }
             }
+        }
+    }
+
+    lateinit var navHeaderMain:NavHeaderMainBinding
+    override fun onStart() {
+        super.onStart()
+        MySharedPreference.init(this)
+        val listSave = MySharedPreference.obektString
+        binding.apply {
+            val rvSaveBookAdapter = RvSaveBookAdapter(listSave, object : RvSaveBookAdapter.RvClick{
+                override fun onClick(saveBook: SaveBook) {
+                    val intent = Intent(this@MainActivity, MainActivity2::class.java)
+                    intent.putExtra("isCategory", 3)
+                    intent.putExtra("keyBook", saveBook)
+                    startActivity(intent)
+                }
+            })
+            navHeaderMain.rvHeader.adapter = rvSaveBookAdapter
+
         }
     }
 
